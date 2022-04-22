@@ -2,10 +2,15 @@
 
 namespace App\Http\Requests;
 
+/**
+ * @OA\Schema()
+ */
 class SortingCenterUpdateRequest extends BaseRequest
 {
     /**
      * Get the validation rules that apply to the request.
+     * @OA\Property(property="name", type="string", example="Kapital sorting"), 
+     * @OA\Property(property="address", type="string", example="Valnu iela 56"),
      *
      * @return array
      */

@@ -9,7 +9,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 /**
  *   @OA\Schema( 
  *       @OA\Property(property="status", type="string", example="delivered"), 
- *       @OA\Property(property="created_at", type="string", example="2022-04-20T22:00:05T0.00000Z"),
+ *       @OA\Property(property="created_at", type="string", example="2022-04-20T22:00:05T0.0000Z"),
  *   ) 
  */
 class StatusResource extends JsonResource

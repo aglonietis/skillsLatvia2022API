@@ -14,7 +14,33 @@ use Illuminate\Http\Response;
 class SortingCenterController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     * path="/sorting-centers",
+     * summary="Displays SortingCenter list",
+     * description="Displays SortingCenter list",
+     * operationId="SortingCenterList",
+     * tags={"SortingCenter"},
+     * @OA\RequestBody(
+     *    description="Page number",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="page", type="integer", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *             @OA\Property( 
+     *                 property = "data", 
+     *                 type="array", 
+     *                      @OA\Items( 
+     *                           ref="#/components/schemas/SortingCenterResource" 
+     *                      ) 
+     *            ) 
+     *    ) 
+     *
+     *  )
+     * )
      *
      * @return AnonymousResourceCollection
      */
@@ -27,9 +53,34 @@ class SortingCenterController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     * path="/sorting-centers",
+     * summary="Create a new SortingCenter",
+     * description="Create a new SortingCenter",
+     * operationId="SortingCenterStore",
+     * tags={"SortingCenter"},
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/SortingCenterStoreRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/SortingCenterResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  SortingCenterStoreRequest $request
+     *
+     * @param SortingCenterStoreRequest $request
      * @return JsonResponse
      */
     public function store(SortingCenterStoreRequest $request)
@@ -43,9 +94,34 @@ class SortingCenterController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/sorting-centers/{id}",
+     * summary="Displays SortingCenter by id",
+     * description="Displays SortingCenter by id",
+     * operationId="SortingCenterShow",
+     * tags={"SortingCenter"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/SortingCenterResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  SortingCenter $center
+     * @param SortingCenter $center
      * @return JsonResponse
      */
     public function show(SortingCenter $center)
@@ -54,10 +130,45 @@ class SortingCenterController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     * path="/sorting-centers/{id}",
+     * summary="Update an existing SortingCenter",
+     * description="Update an existing SortingCenter",
+     * operationId="SortingCenterUpdate",
+     * tags={"SortingCenter"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/SortingCenterUpdateRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/SortingCenterResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  SortingCenterUpdateRequest  $request
-     * @param  SortingCenter  $center
+     *
+     * @param SortingCenterUpdateRequest $request
+     * @param SortingCenter $center
      * @return JsonResponse
      */
     public function update(SortingCenterUpdateRequest $request,SortingCenter $center)
@@ -70,9 +181,34 @@ class SortingCenterController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     * path="/sorting-centers/{id}",
+     * summary="Delete SortingCenter by id",
+     * description="Delete SortingCenter by id",
+     * operationId="SortingCenterDelete",
+     * tags={"SortingCenter"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=204,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/NullResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  SortingCenter $center
+     * @param SortingCenter $center
      * @return JsonResponse
      */
     public function destroy(SortingCenter $center)

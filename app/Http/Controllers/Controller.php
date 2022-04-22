@@ -37,6 +37,10 @@ use Illuminate\Routing\Controller as BaseController;
  *      @OA\Property(property="total", type="integer", example="484") 
  * )
  *
+ * @OA\Schema( 
+ *      schema="NullResource", 
+ * )
+ *
  * 
  *  ) 
  *

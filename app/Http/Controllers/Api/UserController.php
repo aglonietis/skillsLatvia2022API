@@ -15,8 +15,35 @@ use Illuminate\Support\Facades\Hash;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     * path="/users",
+     * summary="Displays user list",
+     * description="Displays user list",
+     * operationId="UserList",
+     * tags={"User"},
+     * @OA\RequestBody(
+     *    description="Page number",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="page", type="integer", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *             @OA\Property( 
+     *                 property = "data", 
+     *                 type="array", 
+     *                      @OA\Items( 
+     *                           ref="#/components/schemas/UserResource" 
+     *                      ) 
+     *            ) 
+     *    ) 
      *
+     *  )
+     * )
+     *
+
      * @return AnonymousResourceCollection
      */
     public function index()
@@ -28,9 +55,34 @@ class UserController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     * path="/users",
+     * summary="Create a new user",
+     * description="Create a new user",
+     * operationId="UserStore",
+     * tags={"User"},
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/UserStoreRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/UserResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  UserStoreRequest $request
+     *
+     * @param UserStoreRequest $request
      * @return JsonResponse
      */
     public function store(UserStoreRequest $request)
@@ -45,9 +97,34 @@ class UserController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/users/{id}",
+     * summary="Displays user by id",
+     * description="Displays user by id",
+     * operationId="UserShow",
+     * tags={"User"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/UserResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  User $user
+     * @param User $user
      * @return JsonResponse
      */
     public function show(User $user)
@@ -56,10 +133,45 @@ class UserController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     * path="/users/{id}",
+     * summary="Update an existing user",
+     * description="Update an existing user",
+     * operationId="UserUpdate",
+     * tags={"User"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/UserUpdateRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/UserResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  UserUpdateRequest  $request
-     * @param  User  $user
+     *
+     * @param UserUpdateRequest $request
+     * @param User $user
      * @return JsonResponse
      */
     public function update(UserUpdateRequest $request,User $user)
@@ -79,10 +191,35 @@ class UserController extends Controller
 
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     * path="/users/{id}",
+     * summary="Delete user by id",
+     * description="Delete user by id",
+     * operationId="UserDelete",
+     * tags={"User"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=204,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/NullResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
-     * @param  User $user
-     * @return JsonResponse
+     * @param User $user
+     * @return AnonymousResourceCollection
      */
     public function destroy(User $user)
     {

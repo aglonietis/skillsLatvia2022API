@@ -19,7 +19,33 @@ use Illuminate\Support\Str;
 class DeliveryController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     * path="/deliveries",
+     * summary="Displays delivery list",
+     * description="Displays delivery list",
+     * operationId="DeliveryList",
+     * tags={"Delivery"},
+     * @OA\RequestBody(
+     *    description="Page number",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="page", type="integer", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *             @OA\Property( 
+     *                 property = "data", 
+     *                 type="array", 
+     *                      @OA\Items( 
+     *                           ref="#/components/schemas/DeliveryListResource" 
+     *                      ) 
+     *            ) 
+     *    ) 
+     *
+     *  )
+     * )
      *
      * @return AnonymousResourceCollection
      */
@@ -32,7 +58,32 @@ class DeliveryController extends Controller
 
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     * path="/deliveries",
+     * summary="Create a new Delivery",
+     * description="Create a new Delivery",
+     * operationId="DeliveryStore",
+     * tags={"Delivery"},
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/DeliveryStoreRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
+     *
      *
      * @param DeliveryStoreRequest $request
      * @return JsonResponse
@@ -51,7 +102,32 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/deliveries/{id}",
+     * summary="Displays Delivery by id",
+     * description="Displays Delivery by id",
+     * operationId="DeliveryShow",
+     * tags={"Delivery"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
      * @param Delivery $delivery
      * @return JsonResponse
@@ -62,7 +138,42 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     * path="/deliveries/{id}",
+     * summary="Update an existing Delivery",
+     * description="Update an existing Delivery",
+     * operationId="DeliveryUpdate",
+     * tags={"Delivery"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/DeliveryUpdateRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
+     *
      *
      * @param DeliveryUpdateRequest $request
      * @param Delivery $delivery
@@ -78,7 +189,32 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * @OA\Delete(
+     * path="/deliveries/{id}",
+     * summary="Delete Delivery by id",
+     * description="Delete Delivery by id",
+     * operationId="DeliveryDelete",
+     * tags={"Delivery"},
+     * @OA\Parameter(
+     *        name="id",
+     *        in="path",
+     *        description="Object ID",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="3"
+     * ),
+     * @OA\Response(
+     *    response=204,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      allOf={
+     *          @OA\Schema(ref="#/components/schemas/NullResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
      * @param Delivery $delivery
      * @return JsonResponse
