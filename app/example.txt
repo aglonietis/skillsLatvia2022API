@@ -1,0 +1,38 @@
+@OA\Post( 
+ *      path="/api/v1/ignore", 
+ *      tags={"Client"}, 
+ *      summary="Client create delivery", 
+ *      description="Creates a new delivery for client", 
+ *      operationId="ClientDeliveryCreate", 
+ *      @OA\RequestBody=(
+ *          @OA\MediaType(
+ *             mediaType="application/json",
+ *             @OA\Schema(
+ *                 type="object",
+ *                 ref="#/components/schemas/ClientDeliveryStoreRequest",
+ *             )
+ *         )
+ *      ),
+ *      @OA\Response( 
+ *          response=200, 
+ *          description="Success", 
+ *          @OA\JsonContent( 
+ *              @OA\Property( 
+ *                  property = "customersList", 
+ *                  type="object", 
+ *                  @OA\Property( 
+ *                      property = "records", 
+ *                      type="array", 
+ *                      @OA\Items( 
+ *                           ref="#/components/schemas/AuthenticationResource" 
+ *                      ) 
+ *                  ) 
+ *              ), 
+ *              @OA\Property( 
+ *                  property = "customersMeta", 
+ *                  type="object", 
+ *                  ref="#/components/schemas/ListMetaResource" 
+ *              ) 
+ *          ) 
+ *      ), 
+ *      security={{"bearerAuth":{}}} 

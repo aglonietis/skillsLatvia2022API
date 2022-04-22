@@ -17,7 +17,34 @@ use Illuminate\Support\Str;
 class ClientController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @OA\Get(
+     * path="/clients/self/deliveries",
+     * summary="Display list of deliveries for a client",
+     * description="Display delivery list for a client",
+     * operationId="ClientDeliveriesList",
+     * tags={"Client"},
+     * @OA\RequestBody(
+     *    description="Page number",
+     *    @OA\JsonContent(
+     *       @OA\Property(property="page", type="integer", example="1"),
+     *    ),
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *             @OA\Property( 
+     *                 property = "data", 
+     *                 type="array", 
+     *                      @OA\Items( 
+     *                           ref="#/components/schemas/DeliveryListResource" 
+     *                      ) 
+     *            ) 
+     *    ) 
+     *
+     *  )
+     * )
+     *
      *
      * @param Request $request
      * @return AnonymousResourceCollection
@@ -34,10 +61,35 @@ class ClientController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * @OA\Post(
+     * path="/clients/self/deliveries",
+     * summary="Create a new delivery for a client",
+     * description="Create a new delivery for a client",
+     * operationId="ClientDeliveryCreate",
+     * tags={"Client"},
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/ClientDeliveryStoreRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
+     *
      *
      * @param ClientDeliveryStoreRequest $request
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
     public function store(ClientDeliveryStoreRequest $request)
     {
@@ -56,11 +108,37 @@ class ClientController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/clients/self/deliveries/trackers/{tracker}",
+     * summary="Find a delivery by tracking uuid",
+     * description="Find a delivery by tracking uuid",
+     * operationId="ClientDeliveryFindByTracker",
+     * tags={"Client"},
+     * @OA\Parameter(
+     *        name="tracker",
+     *        in="path",
+     *        description="Delivery Tracking uuid",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="2421j4j128"
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
+     *
      *
      * @param Request $request
      * @param string $tracker
-     * @return JsonResponse
+     * @return AnonymousResourceCollection
      */
     public function showByTracker(Request $request,string $tracker)
     {

@@ -75,6 +75,9 @@ class UserController extends Controller
         return response()->json(new UserResource($user->refresh()),Response::HTTP_OK);
     }
 
+
+
+
     /**
      * Remove the specified resource from storage.
      *

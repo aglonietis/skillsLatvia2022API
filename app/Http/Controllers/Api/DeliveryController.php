@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Resources\DeliveryListResource;
 use App\Http\Resources\DeliveryResource;
 use App\Http\Requests\DeliveryStoreRequest;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use App\Constants\DeliveryTypes;
@@ -90,7 +91,31 @@ class DeliveryController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/deliveries/trackers/{tracker}/statuses",
+     * summary="Find delivery status history by tracking uuid",
+     * description="Find delivery status history by tracking uuid",
+     * operationId="PublicDeliveryFindByTrackerStatuses",
+     * tags={"Public"},
+     * @OA\Parameter(
+     *        name="tracker",
+     *        in="path",
+     *        description="Delivery Tracking uuid",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="2421j4j128"
+     * ),
+     * @OA\Response(
+     *    response=201,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *      type="array",
+     *           @OA\Items(ref="#/components/schemas/StatusResource")
+     *    ) 
+     *  )
+     * )
      *
      * @param string $tracker
      * @return JsonResponse

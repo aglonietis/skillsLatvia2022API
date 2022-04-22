@@ -23,5 +23,21 @@ class AdminSeeder extends Seeder
         $user->password = Hash::make(config('skills.auth.default_pass'));
         $user->role = RoleTypes::ADMIN;
         $user->save();
+
+        $user = new User();
+        $user->name = "client";
+        $user->surname = "client";
+        $user->email = "client@dgtcloud.lv";
+        $user->password = Hash::make(config('skills.auth.default_pass'));
+        $user->role = RoleTypes::CLIENT;
+        $user->save();
+
+        $user = new User();
+        $user->name = "courier";
+        $user->surname = "courier";
+        $user->email = "courier@dgtcloud.lv";
+        $user->password = Hash::make(config('skills.auth.default_pass'));
+        $user->role = RoleTypes::COURIER;
+        $user->save();
     }
 }

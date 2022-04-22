@@ -12,9 +12,35 @@ use Illuminate\Http\Response;
 class CourierController extends Controller
 {
     /**
-     * Display the specified resource.
+     * @OA\Get(
+     * path="/deliveries/trackers/{tracker}",
+     * summary="Find a delivery by tracking uuid",
+     * description="Find a delivery by tracking uuid",
+     * operationId="CourierDeliveryFindByTracker",
+     * tags={"Courier"},
+     * @OA\Parameter(
+     *        name="tracker",
+     *        in="path",
+     *        description="Delivery Tracking uuid",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="2421j4j128"
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
      *
      * @param string $tracker
+     *
      * @return JsonResponse
      */
     public function show(string $tracker)
@@ -29,10 +55,46 @@ class CourierController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * @OA\Post(
+     * path="/deliveries/trackers/{tracker}",
+     * summary="Update delivery status by tracking uuid",
+     * description="Find delivery by tracking uuid and update delivery status",
+     * operationId="CourierDeliveryStatusUpdate",
+     * tags={"Courier"},
+     * @OA\Parameter(
+     *        name="tracker",
+     *        in="path",
+     *        description="Delivery Tracking uuid",
+     *        @OA\Schema(
+     *           type="string"
+     *        ),
+     *        required=true,
+     *        example="2421j4j128"
+     * ),
+     * @OA\RequestBody(
+     *     @OA\MediaType(
+     *         mediaType="application/json",
+     *         @OA\Schema(
+     *             type="object",
+     *             ref="#/components/schemas/DeliveryCourierUpdateRequest",
+     *         )
+     *     )
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Data",
+     *    @OA\JsonContent( 
+     *       allOf={
+     *          @OA\Schema(ref="#/components/schemas/DeliveryResource"),
+     *      }
+     *    ) 
+     *  )
+     * )
+     *
      *
      * @param DeliveryCourierUpdateRequest $request
      * @param string $tracker
+     *
      * @return JsonResponse
      */
     public function update(DeliveryCourierUpdateRequest $request, string $tracker)

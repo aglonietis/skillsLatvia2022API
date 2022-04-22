@@ -22,9 +22,7 @@ use App\Http\Controllers\Api\ClientController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
 
 // What is error on random page? By default it is not JSON
 // Validation error page? by default not json

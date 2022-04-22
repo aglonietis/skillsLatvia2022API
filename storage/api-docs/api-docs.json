@@ -1,0 +1,290 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Skills Latvia 2022 API",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1"
+        }
+    ],
+    "paths": {
+        "/clients": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register",
+                "description": "Register a new Client",
+                "operationId": "authRegister",
+                "requestBody": {
+                    "description": "Create a new Client",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password",
+                                    "name",
+                                    "surname"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Gibril"
+                                    },
+                                    "surname": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "Pavlovic"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succesfully logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "plainTextToken": {
+                                            "type": "string",
+                                            "example": "5|WhdOuIUQUwiRssfaGbdhfgGQLVF2gyBC0Z3EA7sdbm4vxFS"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Sign in",
+                "description": "Login by email, password",
+                "operationId": "authLogin",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succesfully logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "plainTextToken": {
+                                            "type": "string",
+                                            "example": "5|WhdOuIUQUwiRssfaGbdhfgGQLVF2gyBC0Z3EA7sdbm4vxFS"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients/loginsss/sss": {
+            "post": {
+                "tags": [
+                    "Auths"
+                ],
+                "summary": "Sign inss",
+                "description": "Login by email, sspassword",
+                "operationId": "authLogissn",
+                "requestBody": {
+                    "description": "Pass user credentials",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "user1@mail.com"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "format": "password",
+                                        "example": "PassWord12345"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Succesfully logged in",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "plainTextToken": {
+                                            "type": "string",
+                                            "example": "5|WhdOuIUQUwiRssfaGbdhfgGQLVF2gyBC0Z3EA7sdbm4vxFS"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "ListMetaResource": {
+                "properties": {
+                    "current_page": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "from": {
+                        "type": "integer",
+                        "example": "1"
+                    },
+                    "last_page": {
+                        "type": "integer",
+                        "example": "49"
+                    },
+                    "path": {
+                        "type": "integer",
+                        "example": "https://<website>/api/v1/customers"
+                    },
+                    "per_page": {
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "to": {
+                        "type": "integer",
+                        "example": "10"
+                    },
+                    "total": {
+                        "type": "integer",
+                        "example": "484"
+                    }
+                },
+                "type": "object"
+            },
+            "ClientDeliveryStoreRequest": {
+                "properties": {
+                    "source_address": {
+                        "type": "string",
+                        "example": "Valmiera iela 5"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "example": "Rigas iela 99"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "example": "291042402"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@dgtcloud.lv"
+                    },
+                    "size_depth": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "size_width": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "size_height": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "weight": {
+                        "description": "value in grams",
+                        "type": "integer",
+                        "example": "234"
+                    }
+                },
+                "type": "object"
+            },
+            "AuthenticationResource": {
+                "properties": {
+                    "success": {
+                        "description": "Returns that customer was created with 'ok' or 'not ok' in Credit System",
+                        "type": "string",
+                        "example": "ok"
+                    },
+                    "hash": {
+                        "description": "Returns new hash value of the customer. It can be used to identify customer in later steps and actions",
+                        "type": "string",
+                        "example": "8faFrk2424Foawr21"
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
+    }
+}
