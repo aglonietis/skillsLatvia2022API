@@ -92,7 +92,7 @@ class AuthController extends Controller
         $attempt = Auth::attempt(['email' => $request->get('email'), 'password' => $request->get('password')]);
 
         if (!$attempt) {
-            response()->json([], Response::HTTP_UNAUTHORIZED);
+            return response()->json([], Response::HTTP_UNAUTHORIZED);
         }
 
         $token = $request->user()->createToken(config('skills.auth.token_name'), [$request->user()->role]);
