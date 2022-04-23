@@ -14,6 +14,7 @@ class CourierController extends Controller
     /**
      * @OA\Get(
      * path="/deliveries/trackers/{tracker}",
+     * security={{"bearerAuth":{}}},
      * summary="Find a delivery by tracking uuid",
      * description="Find a delivery by tracking uuid",
      * operationId="CourierDeliveryFindByTracker",
@@ -57,6 +58,7 @@ class CourierController extends Controller
     /**
      * @OA\Put(
      * path="/deliveries/trackers/{tracker}",
+     * security={{"bearerAuth":{}}},
      * summary="Update delivery status by tracking uuid",
      * description="Find delivery by tracking uuid and update delivery status",
      * operationId="CourierDeliveryStatusUpdate",

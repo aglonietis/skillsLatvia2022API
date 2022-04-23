@@ -128,6 +128,9 @@
                                 }
                             }
                         }
+                    },
+                    "400": {
+                        "description": "Email or Password is incorrect"
                     }
                 }
             }
@@ -175,7 +178,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -208,7 +216,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/clients/self/deliveries/trackers/{tracker}": {
@@ -246,7 +259,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/deliveries/trackers/{tracker}": {
@@ -284,7 +302,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -329,7 +352,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/deliveries": {
@@ -375,7 +403,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -408,7 +441,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/deliveries/{id}": {
@@ -446,7 +484,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -491,7 +534,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -527,7 +575,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/deliveries/trackers/{tracker}/statuses": {
@@ -564,7 +617,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/sorting-centers": {
@@ -726,7 +784,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -762,7 +825,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users": {
@@ -808,7 +876,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "post": {
                 "tags": [
@@ -841,7 +914,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/users/{id}": {
@@ -879,7 +957,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "put": {
                 "tags": [
@@ -924,7 +1007,12 @@
                             }
                         }
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             },
             "delete": {
                 "tags": [
@@ -1340,7 +1428,7 @@
                     },
                     "created_at": {
                         "type": "string",
-                        "example": "2022-04-20T22:00:05T0.0000Z"
+                        "example": "2022-04-20T22:00:05.000000Z"
                     }
                 },
                 "type": "object"
@@ -1369,11 +1457,11 @@
                     },
                     "created_at": {
                         "type": "string",
-                        "example": "2022-04-20T12:00:43T0.0000Z"
+                        "example": "2022-04-20T12:00:43.000000Z"
                     },
                     "updated_at": {
                         "type": "string",
-                        "example": "2022-04-20T12:00:43T0.0000Z"
+                        "example": "2022-04-20T12:00:43.000000Z"
                     }
                 },
                 "type": "object"

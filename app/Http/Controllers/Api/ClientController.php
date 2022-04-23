@@ -19,6 +19,7 @@ class ClientController extends Controller
     /**
      * @OA\Get(
      * path="/clients/self/deliveries",
+     * security={{"bearerAuth":{}}},
      * summary="Display list of deliveries for a client",
      * description="Display delivery list for a client",
      * operationId="ClientDeliveriesList",
@@ -43,7 +44,9 @@ class ClientController extends Controller
      *    ) 
      *
      *  )
+     *
      * )
+     *
      *
      *
      * @param Request $request
@@ -63,6 +66,7 @@ class ClientController extends Controller
     /**
      * @OA\Post(
      * path="/clients/self/deliveries",
+     * security={{"bearerAuth":{}}},
      * summary="Create a new delivery for a client",
      * description="Create a new delivery for a client",
      * operationId="ClientDeliveryCreate",
@@ -110,6 +114,7 @@ class ClientController extends Controller
     /**
      * @OA\Get(
      * path="/clients/self/deliveries/trackers/{tracker}",
+     * security={{"bearerAuth":{}}},
      * summary="Find a delivery by tracking uuid",
      * description="Find a delivery by tracking uuid",
      * operationId="ClientDeliveryFindByTracker",
@@ -140,7 +145,7 @@ class ClientController extends Controller
      * @param string $tracker
      * @return JsonResponse
      */
-    public function showByTracker(Request $request,string $tracker)
+    public function showByTracker(Request $request, string $tracker)
     {
         $userId = (int)$request->user()->id;
 

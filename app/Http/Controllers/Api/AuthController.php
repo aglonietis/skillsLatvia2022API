@@ -80,9 +80,15 @@ class AuthController extends Controller
      *    description="Succesfully logged in",
      *    @OA\JsonContent(
      *       @OA\Property(property="plainTextToken", type="string", example="5|WhdOuIUQUwiRssfaGbdhfgGQLVF2gyBC0Z3EA7sdbm4vxFS")
-     *        )
-     *     )
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=400,
+     *    description="Email or Password is incorrect"
      * )
+     * )
+     *
+     *
      *
      * @param ClientLoginRequest $request
      * @return JsonResponse

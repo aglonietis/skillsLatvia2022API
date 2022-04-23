@@ -16,6 +16,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/users",
+     * security={{"bearerAuth":{}}},
      * summary="Displays user list",
      * description="Displays user list",
      * operationId="UserList",
@@ -56,6 +57,7 @@ class UserController extends Controller
     /**
      * @OA\Post(
      * path="/users",
+     * security={{"bearerAuth":{}}},
      * summary="Create a new user",
      * description="Create a new user",
      * operationId="UserStore",
@@ -98,6 +100,7 @@ class UserController extends Controller
     /**
      * @OA\Get(
      * path="/users/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Displays user by id",
      * description="Displays user by id",
      * operationId="UserShow",
@@ -134,6 +137,7 @@ class UserController extends Controller
     /**
      * @OA\Put(
      * path="/users/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Update an existing user",
      * description="Update an existing user",
      * operationId="UserUpdate",

@@ -19,6 +19,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Get(
      * path="/deliveries",
+     * security={{"bearerAuth":{}}},
      * summary="Displays delivery list",
      * description="Displays delivery list",
      * operationId="DeliveryList",
@@ -58,6 +59,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Post(
      * path="/deliveries",
+     * security={{"bearerAuth":{}}},
      * summary="Create a new Delivery",
      * description="Create a new Delivery",
      * operationId="DeliveryStore",
@@ -103,6 +105,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Get(
      * path="/deliveries/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Displays Delivery by id",
      * description="Displays Delivery by id",
      * operationId="DeliveryShow",
@@ -139,6 +142,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Put(
      * path="/deliveries/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Update an existing Delivery",
      * description="Update an existing Delivery",
      * operationId="DeliveryUpdate",
@@ -190,6 +194,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Delete(
      * path="/deliveries/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Delete Delivery by id",
      * description="Delete Delivery by id",
      * operationId="DeliveryDelete",
@@ -228,6 +233,7 @@ class DeliveryController extends Controller
     /**
      * @OA\Get(
      * path="/deliveries/trackers/{tracker}/statuses",
+     * security={{"bearerAuth":{}}},
      * summary="Find delivery status history by tracking uuid",
      * description="Find delivery status history by tracking uuid",
      * operationId="PublicDeliveryFindByTrackerStatuses",

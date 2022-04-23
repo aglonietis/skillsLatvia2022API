@@ -132,6 +132,7 @@ class SortingCenterController extends Controller
     /**
      * @OA\Put(
      * path="/sorting-centers/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Update an existing SortingCenter",
      * description="Update an existing SortingCenter",
      * operationId="SortingCenterUpdate",
@@ -183,6 +184,7 @@ class SortingCenterController extends Controller
     /**
      * @OA\Delete(
      * path="/sorting-centers/{id}",
+     * security={{"bearerAuth":{}}},
      * summary="Delete SortingCenter by id",
      * description="Delete SortingCenter by id",
      * operationId="SortingCenterDelete",
