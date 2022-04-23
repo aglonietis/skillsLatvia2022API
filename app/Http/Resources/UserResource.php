@@ -13,8 +13,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *       @OA\Property(property="surname", type="string", example="kuznecovs"), 
  *       @OA\Property(property="email", type="string", example="admin@dgtcloud.lv"), 
  *       @OA\Property(property="role", type="string", example="admin"), 
- *       @OA\Property(property="created_at", type="string", example="2022-04-20T12:00:43T0.0000Z"), 
- *       @OA\Property(property="updated_at", type="string", example="2022-04-20T12:00:43T0.0000Z"), 
+ *       @OA\Property(property="created_at", type="string", example="2022-04-20T12:00:43.000000Z"), 
+ *       @OA\Property(property="updated_at", type="string", example="2022-04-20T12:00:43.000000Z"), 
  *   ) 
  */
 class UserResource extends JsonResource

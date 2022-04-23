@@ -15,4 +15,3 @@ use App\Http\Controllers\Api\HomeController;
 */
 
 Route::get('/', [HomeController::class, 'home'])->name('home');
-
