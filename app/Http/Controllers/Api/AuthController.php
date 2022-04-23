@@ -51,6 +51,7 @@ class AuthController extends Controller
         $user = new User();
 
         $user->fill($request->validated());
+        // Role should be set to client, because registration is a public endpoint for clients
         $user->role = RoleTypes::CLIENT;
         $user->password = Hash::make($request->get('password'));
         $user->save();

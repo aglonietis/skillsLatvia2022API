@@ -13,7 +13,7 @@ class Delivery extends Model
     /**
      * The attributes that are mass assignable.
      *
-     * @var array<int, string>
+     * @var array<string>
      */
     protected $fillable = [
         'source_address',
@@ -33,6 +33,7 @@ class Delivery extends Model
         return $this->hasMany(DeliveryStatus::class,"delivery_id")->orderBy('created_at','desc');
     }
 
+    // Catch Delivery model update and create events. Then create a new DeliveryStatus for each event caught. No need to modify each place.
     public static function boot()
     {
         parent::boot();

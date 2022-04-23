@@ -132,34 +132,23 @@
                 }
             }
         },
-        "/clients/loginsss/sss": {
-            "post": {
+        "/clients/self/deliveries": {
+            "get": {
                 "tags": [
-                    "Auths"
+                    "Client"
                 ],
-                "summary": "Sign inss",
-                "description": "Login by email, sspassword",
-                "operationId": "authLogissn",
+                "summary": "Display list of deliveries for a client",
+                "description": "Display delivery list for a client",
+                "operationId": "ClientDeliveriesList",
                 "requestBody": {
-                    "description": "Pass user credentials",
-                    "required": true,
+                    "description": "Page number",
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "email",
-                                    "password"
-                                ],
                                 "properties": {
-                                    "email": {
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user1@mail.com"
-                                    },
-                                    "password": {
-                                        "type": "string",
-                                        "format": "password",
-                                        "example": "PassWord12345"
+                                    "page": {
+                                        "type": "integer",
+                                        "example": "1"
                                     }
                                 },
                                 "type": "object"
@@ -169,17 +158,804 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Succesfully logged in",
+                        "description": "Data",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "plainTextToken": {
-                                            "type": "string",
-                                            "example": "5|WhdOuIUQUwiRssfaGbdhfgGQLVF2gyBC0Z3EA7sdbm4vxFS"
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/DeliveryListResource"
+                                            }
                                         }
                                     },
                                     "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Create a new delivery for a client",
+                "description": "Create a new delivery for a client",
+                "operationId": "ClientDeliveryCreate",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ClientDeliveryStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/clients/self/deliveries/trackers/{tracker}": {
+            "get": {
+                "tags": [
+                    "Client"
+                ],
+                "summary": "Find a delivery by tracking uuid",
+                "description": "Find a delivery by tracking uuid",
+                "operationId": "ClientDeliveryFindByTracker",
+                "parameters": [
+                    {
+                        "name": "tracker",
+                        "in": "path",
+                        "description": "Delivery Tracking uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2421j4j128"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deliveries/trackers/{tracker}": {
+            "get": {
+                "tags": [
+                    "Courier"
+                ],
+                "summary": "Find a delivery by tracking uuid",
+                "description": "Find a delivery by tracking uuid",
+                "operationId": "CourierDeliveryFindByTracker",
+                "parameters": [
+                    {
+                        "name": "tracker",
+                        "in": "path",
+                        "description": "Delivery Tracking uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2421j4j128"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Courier"
+                ],
+                "summary": "Update delivery status by tracking uuid",
+                "description": "Find delivery by tracking uuid and update delivery status",
+                "operationId": "CourierDeliveryStatusUpdate",
+                "parameters": [
+                    {
+                        "name": "tracker",
+                        "in": "path",
+                        "description": "Delivery Tracking uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2421j4j128"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeliveryCourierUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deliveries": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Displays delivery list",
+                "description": "Displays delivery list",
+                "operationId": "DeliveryList",
+                "requestBody": {
+                    "description": "Page number",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/DeliveryListResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Create a new Delivery",
+                "description": "Create a new Delivery",
+                "operationId": "DeliveryStore",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeliveryStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deliveries/{id}": {
+            "get": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Displays Delivery by id",
+                "description": "Displays Delivery by id",
+                "operationId": "DeliveryShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Update an existing Delivery",
+                "description": "Update an existing Delivery",
+                "operationId": "DeliveryUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/DeliveryUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/DeliveryResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Delivery"
+                ],
+                "summary": "Delete Delivery by id",
+                "description": "Delete Delivery by id",
+                "operationId": "DeliveryDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NullResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/deliveries/trackers/{tracker}/statuses": {
+            "get": {
+                "tags": [
+                    "Public"
+                ],
+                "summary": "Find delivery status history by tracking uuid",
+                "description": "Find delivery status history by tracking uuid",
+                "operationId": "PublicDeliveryFindByTrackerStatuses",
+                "parameters": [
+                    {
+                        "name": "tracker",
+                        "in": "path",
+                        "description": "Delivery Tracking uuid",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "2421j4j128"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/StatusResource"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sorting-centers": {
+            "get": {
+                "tags": [
+                    "SortingCenter"
+                ],
+                "summary": "Displays SortingCenter list",
+                "description": "Displays SortingCenter list",
+                "operationId": "SortingCenterList",
+                "requestBody": {
+                    "description": "Page number",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SortingCenterResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "SortingCenter"
+                ],
+                "summary": "Create a new SortingCenter",
+                "description": "Create a new SortingCenter",
+                "operationId": "SortingCenterStore",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SortingCenterStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SortingCenterResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/sorting-centers/{id}": {
+            "get": {
+                "tags": [
+                    "SortingCenter"
+                ],
+                "summary": "Displays SortingCenter by id",
+                "description": "Displays SortingCenter by id",
+                "operationId": "SortingCenterShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SortingCenterResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "SortingCenter"
+                ],
+                "summary": "Update an existing SortingCenter",
+                "description": "Update an existing SortingCenter",
+                "operationId": "SortingCenterUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/SortingCenterUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/SortingCenterResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "SortingCenter"
+                ],
+                "summary": "Delete SortingCenter by id",
+                "description": "Delete SortingCenter by id",
+                "operationId": "SortingCenterDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NullResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Displays user list",
+                "description": "Displays user list",
+                "operationId": "UserList",
+                "requestBody": {
+                    "description": "Page number",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "page": {
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/UserResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Create a new user",
+                "description": "Create a new user",
+                "operationId": "UserStore",
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserStoreRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{id}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Displays user by id",
+                "description": "Displays user by id",
+                "operationId": "UserShow",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Update an existing user",
+                "description": "Update an existing user",
+                "operationId": "UserUpdate",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UserUpdateRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        }
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Delete user by id",
+                "description": "Delete user by id",
+                "operationId": "UserDelete",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Object ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "3"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Data",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "allOf": [
+                                        {
+                                            "$ref": "#/components/schemas/NullResource"
+                                        }
+                                    ]
                                 }
                             }
                         }
@@ -223,6 +999,7 @@
                 },
                 "type": "object"
             },
+            "NullResource": {},
             "ClientDeliveryStoreRequest": {
                 "properties": {
                     "source_address": {
@@ -264,17 +1041,339 @@
                 },
                 "type": "object"
             },
+            "DeliveryCourierUpdateRequest": {
+                "properties": {
+                    "status": {
+                        "description": "Status of the delivery. Availble values: accepted, on_road, in_sorting_center, delivered, ",
+                        "type": "string",
+                        "example": "delivered"
+                    }
+                },
+                "type": "object"
+            },
+            "DeliveryStoreRequest": {
+                "properties": {
+                    "source_address": {
+                        "type": "string",
+                        "example": "Valmiera iela 5"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "example": "Rigas iela 99"
+                    },
+                    "user_id": {
+                        "type": "string",
+                        "example": "19"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "example": "291042402"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@dgtcloud.lv"
+                    },
+                    "size_depth": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "size_width": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "size_height": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "weight": {
+                        "description": "value in grams",
+                        "type": "integer",
+                        "example": "234"
+                    }
+                },
+                "type": "object"
+            },
+            "DeliveryUpdateRequest": {
+                "properties": {
+                    "source_address": {
+                        "type": "string",
+                        "example": "Valmiera iela 5"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "example": "Rigas iela 99"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "example": "291042402"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "test@dgtcloud.lv"
+                    },
+                    "size_depth": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "size_width": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "size_height": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "weight": {
+                        "description": "value in grams",
+                        "type": "integer",
+                        "example": "234"
+                    }
+                },
+                "type": "object"
+            },
+            "SortingCenterStoreRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Kapital sorting"
+                    },
+                    "address": {
+                        "description": "Get the validation rules that apply to the request.",
+                        "type": "string",
+                        "example": "Valnu iela 56"
+                    }
+                },
+                "type": "object"
+            },
+            "SortingCenterUpdateRequest": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Kapital sorting"
+                    },
+                    "address": {
+                        "description": "Get the validation rules that apply to the request.",
+                        "type": "string",
+                        "example": "Valnu iela 56"
+                    }
+                },
+                "type": "object"
+            },
+            "UserStoreRequest": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user1@mail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "PassWord12345"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Gibril"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Pavlovic"
+                    },
+                    "role": {
+                        "description": "Role of the user. Allowed role types: admin, courier, client",
+                        "type": "string",
+                        "example": "admin"
+                    }
+                },
+                "type": "object"
+            },
+            "UserUpdateRequest": {
+                "properties": {
+                    "email": {
+                        "type": "string",
+                        "example": "user1@mail.com"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "PassWord12345"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "Gibril"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "Pavlovic"
+                    },
+                    "role": {
+                        "description": "Role of the user. Allowed role types: admin, courier, client",
+                        "type": "string",
+                        "example": "admin"
+                    }
+                },
+                "type": "object"
+            },
             "AuthenticationResource": {
                 "properties": {
-                    "success": {
-                        "description": "Returns that customer was created with 'ok' or 'not ok' in Credit System",
-                        "type": "string",
-                        "example": "ok"
-                    },
-                    "hash": {
-                        "description": "Returns new hash value of the customer. It can be used to identify customer in later steps and actions",
+                    "plainTextToken": {
+                        "description": "token for the customer",
                         "type": "string",
                         "example": "8faFrk2424Foawr21"
+                    }
+                },
+                "type": "object"
+            },
+            "DeliveryListResource": {
+                "properties": {
+                    "source_address": {
+                        "type": "string",
+                        "example": "Valmieras iela 15"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "example": "Rīgas iela 99"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "example": "29214124"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "admin@dgtcloud.lv"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "example": "LV-24124124k4"
+                    },
+                    "tracking_uuid": {
+                        "type": "string",
+                        "example": "k4k249k19k241"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "delivered"
+                    }
+                },
+                "type": "object"
+            },
+            "DeliveryResource": {
+                "properties": {
+                    "source_address": {
+                        "type": "string",
+                        "example": "Valmieras iela 15"
+                    },
+                    "delivery_address": {
+                        "type": "string",
+                        "example": "Rīgas iela 99"
+                    },
+                    "phone_number": {
+                        "type": "string",
+                        "example": "29214124"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "admin@dgtcloud.lv"
+                    },
+                    "uuid": {
+                        "type": "string",
+                        "example": "LV-24124124k4"
+                    },
+                    "tracking_uuid": {
+                        "type": "string",
+                        "example": "k4k249k19k241"
+                    },
+                    "status": {
+                        "type": "string",
+                        "example": "delivered"
+                    },
+                    "size_depth": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "123"
+                    },
+                    "size_width": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "size_height": {
+                        "description": "value in milimeters",
+                        "type": "integer",
+                        "example": "423"
+                    },
+                    "weight": {
+                        "description": "value in grams",
+                        "type": "integer",
+                        "example": "234"
+                    },
+                    "status_history": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/StatusResource"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "SortingCenterResource": {
+                "properties": {
+                    "name": {
+                        "type": "string",
+                        "example": "Kapital sorting"
+                    },
+                    "address": {
+                        "type": "string",
+                        "example": "Valnu iela 56"
+                    }
+                },
+                "type": "object"
+            },
+            "StatusResource": {
+                "properties": {
+                    "status": {
+                        "type": "string",
+                        "example": "delivered"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-04-20T22:00:05T0.0000Z"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "example": "1"
+                    },
+                    "name": {
+                        "type": "string",
+                        "example": "vladislavs"
+                    },
+                    "surname": {
+                        "type": "string",
+                        "example": "kuznecovs"
+                    },
+                    "email": {
+                        "type": "string",
+                        "example": "admin@dgtcloud.lv"
+                    },
+                    "role": {
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "example": "2022-04-20T12:00:43T0.0000Z"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "example": "2022-04-20T12:00:43T0.0000Z"
                     }
                 },
                 "type": "object"

@@ -92,8 +92,9 @@ class DeliveryController extends Controller
 
         $delivery->fill($request->validated());
         $delivery->status = DeliveryTypes::ACCEPTED;
+        // Both uuid are not actual UUID, but indicate that they are unique identifiers.
         $delivery->uuid = "LV-" . Str::uuid(); // Could add substr from the source address
-        $delivery->tracking_uuid = Str::random(config('skills.delivery.tracker_length'));
+        $delivery->tracking_uuid = Str::random(config('skills.delivery.tracker_length')); // TODO: add check if already exists
         $delivery->save();
 
         return response()->json(new DeliveryResource($delivery), Response::HTTP_CREATED);
