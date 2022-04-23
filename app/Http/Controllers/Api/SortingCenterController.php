@@ -42,13 +42,13 @@ class SortingCenterController extends Controller
      *  )
      * )
      *
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function index()
     {
-        return SortingCenterResource::collection(
+        return response()->json(SortingCenterResource::collection(
             SortingCenter::query()->paginate(config('skills.pagination.per_page'))
-        );
+        ),Response::HTTP_OK);
     }
 
 
@@ -126,11 +126,11 @@ class SortingCenterController extends Controller
      */
     public function show(SortingCenter $center)
     {
-        return response()->json(new SortingCenterResource($center));
+        return response()->json(new SortingCenterResource($center),Response::HTTP_OK);
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      * path="/sorting-centers/{id}",
      * summary="Update an existing SortingCenter",
      * description="Update an existing SortingCenter",

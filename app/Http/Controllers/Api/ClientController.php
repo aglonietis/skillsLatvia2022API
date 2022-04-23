@@ -55,7 +55,7 @@ class ClientController extends Controller
 
         return DeliveryListResource::collection(
             Delivery::query()->orderBy('status', 'asc')
-                ->where('customer_id', '=', $userId)
+                ->where('user_id', '=', $userId)
                 ->paginate(config('skills.pagination.per_page'))
         );
     }
@@ -89,7 +89,7 @@ class ClientController extends Controller
      *
      *
      * @param ClientDeliveryStoreRequest $request
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function store(ClientDeliveryStoreRequest $request)
     {
@@ -98,7 +98,7 @@ class ClientController extends Controller
         $delivery = new Delivery();
 
         $delivery->fill($request->validated());
-        $delivery->customer_id = $userId;
+        $delivery->user_id = $userId;
         $delivery->status = DeliveryTypes::ACCEPTED;
         $delivery->uuid = "LV-" . Str::uuid(); // Could add substr from the source address
         $delivery->tracking_uuid = Str::random(config('skills.delivery.tracker_length'));
@@ -138,14 +138,14 @@ class ClientController extends Controller
      *
      * @param Request $request
      * @param string $tracker
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function showByTracker(Request $request,string $tracker)
     {
         $userId = (int)$request->user()->id;
 
         $delivery = Delivery::query()->where('tracking_uuid', '=', $tracker)
-            ->where('customer_id', '=', $userId)->first();
+            ->where('user_id', '=', $userId)->first();
 
         if (empty($delivery)) {
             return response()->json([], Response::HTTP_NOT_FOUND);

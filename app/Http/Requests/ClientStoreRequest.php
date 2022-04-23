@@ -2,8 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Constants\RoleTypes;
-
 class ClientStoreRequest extends BaseRequest
 {
     /**

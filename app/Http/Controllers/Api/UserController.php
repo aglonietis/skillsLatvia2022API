@@ -8,7 +8,6 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use App\Http\Resources\UserResource;
 use App\Http\Requests\UserStoreRequest;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Hash;
 
@@ -44,13 +43,13 @@ class UserController extends Controller
      * )
      *
 
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function index()
     {
-        return UserResource::collection(
+        return response()->json(UserResource::collection(
          User::query()->paginate(config('skills.pagination.per_page'))
-        );
+        ),Response::HTTP_OK);
     }
 
 
@@ -129,11 +128,11 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json(new UserResource($user));
+        return response()->json(new UserResource($user), Response::HTTP_OK);
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      * path="/users/{id}",
      * summary="Update an existing user",
      * description="Update an existing user",
@@ -219,7 +218,7 @@ class UserController extends Controller
      * )
      *
      * @param User $user
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function destroy(User $user)
     {

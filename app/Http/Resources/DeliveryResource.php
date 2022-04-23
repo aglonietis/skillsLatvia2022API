@@ -34,7 +34,7 @@ class DeliveryResource extends JsonResource
     {
         return [
             "id" => $this->id,
-            "customer_id" => $this->customer_id,
+            "user_id" => $this->user_id,
             "source_address" => $this->source_address,
             "delivery_address" => $this->delivery_address,
             "phone_number" => $this->phone_number,

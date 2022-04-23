@@ -55,7 +55,7 @@ class CourierController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      * path="/deliveries/trackers/{tracker}",
      * summary="Update delivery status by tracking uuid",
      * description="Find delivery by tracking uuid and update delivery status",

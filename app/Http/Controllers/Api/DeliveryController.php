@@ -10,8 +10,6 @@ use Illuminate\Http\JsonResponse;
 use App\Http\Resources\DeliveryListResource;
 use App\Http\Resources\DeliveryResource;
 use App\Http\Requests\DeliveryStoreRequest;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Http\Response;
 use App\Constants\DeliveryTypes;
 use Illuminate\Support\Str;
@@ -47,13 +45,13 @@ class DeliveryController extends Controller
      *  )
      * )
      *
-     * @return AnonymousResourceCollection
+     * @return JsonResponse
      */
     public function index()
     {
-        return DeliveryListResource::collection(
+        return response()->json(DeliveryListResource::collection(
             Delivery::query()->orderBy('status', 'asc')->paginate(config('skills.pagination.per_page'))
-        );
+        ),Response::HTTP_OK);
     }
 
 
@@ -138,7 +136,7 @@ class DeliveryController extends Controller
     }
 
     /**
-     * @OA\Post(
+     * @OA\Put(
      * path="/deliveries/{id}",
      * summary="Update an existing Delivery",
      * description="Update an existing Delivery",
@@ -264,6 +262,6 @@ class DeliveryController extends Controller
             return response()->json([], Response::HTTP_NOT_FOUND);
         }
 
-        return response()->json(StatusResource::collection($delivery->statuses));
+        return response()->json(StatusResource::collection($delivery->statuses),Response::HTTP_OK);
     }
 }

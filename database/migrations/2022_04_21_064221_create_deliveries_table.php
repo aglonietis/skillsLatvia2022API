@@ -17,7 +17,7 @@ class CreateDeliveriesTable extends Migration
         Schema::create('deliveries', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->unsignedBigInteger('customer_id')->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->string('source_address','512');
             $table->string('delivery_address','512');
             $table->string('phone_number');

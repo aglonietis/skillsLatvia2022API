@@ -7,7 +7,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
-class AdminSeeder extends Seeder
+class DefaultUserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -19,7 +19,7 @@ class AdminSeeder extends Seeder
         $user = new User();
         $user->name = "admin";
         $user->surname = "admin";
-        $user->email = "admin@dgtcloud.lv";
+        $user->email = "admin@skills.lv";
         $user->password = Hash::make(config('skills.auth.default_pass'));
         $user->role = RoleTypes::ADMIN;
         $user->save();
@@ -27,7 +27,7 @@ class AdminSeeder extends Seeder
         $user = new User();
         $user->name = "client";
         $user->surname = "client";
-        $user->email = "client@dgtcloud.lv";
+        $user->email = "client@skills.lv";
         $user->password = Hash::make(config('skills.auth.default_pass'));
         $user->role = RoleTypes::CLIENT;
         $user->save();
@@ -35,7 +35,7 @@ class AdminSeeder extends Seeder
         $user = new User();
         $user->name = "courier";
         $user->surname = "courier";
-        $user->email = "courier@dgtcloud.lv";
+        $user->email = "courier@skills.lv";
         $user->password = Hash::make(config('skills.auth.default_pass'));
         $user->role = RoleTypes::COURIER;
         $user->save();

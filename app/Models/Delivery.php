@@ -18,7 +18,7 @@ class Delivery extends Model
     protected $fillable = [
         'source_address',
         'delivery_address',
-        'customer_id',
+        'user_id',
         'phone_number',
         'email',
         'size_depth',
@@ -40,11 +40,19 @@ class Delivery extends Model
         self::updated(function(Delivery $delivery){
 
             if(array_key_exists("status",$delivery->getChanges())) {
-                $status = new DeliveryStatus();
-                $status->delivery_id = $delivery->id;
-                $status->status = $delivery->status;
-                $status->save();
+                $delivery->registerStatusUpdate($delivery->status);
             }
         });
+
+        self::created(function(Delivery $delivery) {
+            $delivery->registerStatusUpdate($delivery->status);
+        });
+    }
+
+    protected function registerStatusUpdate(string $newStatus) {
+        $status = new DeliveryStatus();
+        $status->delivery_id = $this->id;
+        $status->status = $newStatus;
+        $status->save();
     }
 }
